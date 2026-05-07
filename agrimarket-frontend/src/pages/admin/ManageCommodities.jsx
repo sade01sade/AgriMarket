@@ -184,10 +184,10 @@ export default function ManageCommodities() {
                 <td className="px-5 py-3 text-gray-500">{c.category}</td>
                 <td className="px-5 py-3 text-gray-500">{c.unit}</td>
                 <td className="px-5 py-3">
-                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium
+                  <span className={`text-xs px-2 py-0.5  font-medium
                     ${c.active
-                      ? "bg-green-100 text-green-700"
-                      : "bg-gray-100 text-gray-500"}`}>
+                      ? "text-green-700"
+                      : "text-gray-500"}`}>
                     {c.active ? "Active" : "Inactive"}
                   </span>
                 </td>
