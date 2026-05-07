@@ -1,0 +1,53 @@
+services:
+  # ── PostgreSQL Database ──────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: agrimarket-db
+    environment:
+      POSTGRES_DB: agrimarket
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d agrimarket"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Spring Boot Backend ──────────────────────────────────────────
+  backend:
+    build:
+      context: ./agrimarketAPI
+      dockerfile: Dockerfile
+    container_name: agrimarketAPI
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/agrimarket
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      APP_JWT_SECRET: your-very-long-secret-key-minimum-256-bits-change-this
+      APP_JWT_EXPIRATION: 900000
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
+
+  # ── React Frontend ───────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./agrimarket-frontend
+      dockerfile: Dockerfile
+    container_name: agrimarket-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: on-failure
+
+volumes:
+  postgres_data:
