@@ -232,7 +232,7 @@ agrimarket/
 #### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/agrimarket.git
+git clone https://github.com/sade01sade/AgriMarket.git
 cd agrimarket
 ```
 
@@ -287,7 +287,7 @@ The entire stack (frontend, backend, database) runs with a single command.
 #### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/agrimarket.git
+git clone https://github.com/sade01sade/AgriMarket.git
 cd agrimarket
 ```
 
